@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column-reverse;
+      width: 100%;
+      height: 100vh;
+      background: black;
+      color: white;
+      overflow: hidden;
+    }
+
+    * {color: white;}
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+      }
+      25% {
+        opacity: 0.5;
+      }
+      50% {
+        opacity: 1;
+      }
+      75% {
+        opacity: 0.7;
+      }
+      100% {
+        opacity: 0.2;
+      }
+    }
+
+    @keyframes glow {
+      0% {
+        box-shadow: 0 0 2vmin violet;
+      }
+      14.2% {
+        box-shadow: 0 0 4vmin red;
+      }
+      28.5% {
+        box-shadow: 0 0 7vmin orange;
+      }
+      42.8% {
+        box-shadow: 0 0 10vmin yellow;
+      }
+      57.1% {
+        box-shadow: 0 0 7vmin green;
+      }
+      71.4% {
+        box-shadow: 0 0 4vmin skyblue;
+      }
+      85.7% {
+        box-shadow: 0 0 2vmin blue;
+      }
+      100% {
+        box-shadow: 0 0 2vmin violet;
+      }
+    }
+
+    @keyframes glowText {
+      0% {
+        text-shadow: 0 0 2vmin violet;
+      }
+      14.2% {
+        text-shadow: 0 0 4vmin red;
+      }
+      28.5% {
+        text-shadow: 0 0 7vmin orange;
+      }
+      42.8% {
+        text-shadow: 0 0 10vmin yellow;
+      }
+      57.1% {
+        text-shadow: 0 0 7vmin green;
+      }
+      71.4% {
+        text-shadow: 0 0 4vmin skyblue;
+      }
+      85.7% {
+        text-shadow: 0 0 2vmin blue;
+      }
+      100% {
+        text-shadow: 0 0 2vmin violet;
+      }
+    }
+
+    @keyframes scaleDown {
+      0% {
+        transform: scale(0);
+      }
+      50% {
+        transform: scale(2);
+      }
+      100% {
+        transform: scale(0);
+      }
+    }
+
+    .square {
+      position: absolute;
+      width: 68vmin;
+      height: 66vmin;
+      border: 1px solid #4c4;
+      background: transparent;
+      animation: fadeIn 6s infinite;
+    }
+
+    .square:nth-child(1) {
+      transform: rotate(60deg);
+      animation: glow 3s infinite;
+    }
+
+    .square:nth-child(2) {
+      transform: rotate(120deg);
+      animation: glow 3s 0.1s infinite;
+    }
+
+    .square:nth-child(3) {
+      transform: rotate(180deg);
+      animation: glow 3s 0.2s infinite;
+    }
+
+    .square:nth-child(4) {
+      transform: rotate(240deg);
+      animation: glow 3s 0.3s infinite;
+    }
+
+    .square:nth-child(5) {
+      transform: rotate(300deg);
+      animation: glow 3s 0.4s infinite;
+    }
+
+    .round {
+      position: absolute;
+      width: 100vmax;
+      height: 100vmax;
+      border: 1px solid #4c4;
+      background: transparent;
+      border-radius: 50%;
+      box-shadow: 0 0 10px 10px #f00, 0 0 20px 20px #f90, 0 0 30px 30px #ff0, 0 0 40px 40px #0f0, 0 0 50px 50px #00f, 0 0 60px 60px #90f, 0 0 70px 70px #f0f;
+      animation: scaleDown 8s;
+    }
+
+    #header1 {
+      background: linear-gradient(to right, #ff9a9e, #fad0c4, #fad0c4, #a18cd1, #fbc2eb);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    #header2 {
+      background: linear-gradient(to right, #ff9a9e, #fad0c4, #fad0c4, #a18cd1, #fbc2eb);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-size: 20vmin;
+      animation: scaleDown 16s infinite, glowText 8s infinite;
+    }
+  </style>
+
+  <body>
+    <script>
+      function createAndAppendSquare(n = 15) {
+        for (let i = 0; i < n; i++) {
+          setTimeout(() => {
+            const division = document.createElement('div');
+            division.classList.add('square');
+            division.style.transform = `rotate(${i * (360 / n)}deg)`;
+            document.body.appendChild(division);
+          }, i * 200);
+        }
+      }
+
+      window.onload = (event) => {
+        console.log('page is fully loaded');
+
+        createAndAppendSquare(5);
+
+        const header1 = document.createElement('h1');
+        header1.id = 'header1';
+        header1.style.position = 'relative';
+        header1.style.zIndex = '1';
+        document.body.appendChild(header1);
+        const header2 = document.createElement('h2');
+        header2.id = 'header2';
+        header2.style.position = 'relative';
+        header2.style.zIndex = '1';
+        document.body.appendChild(header2);
+
+        setInterval(() => {
+          var nowTime = `${
+            String(new Date().getMinutes()).length === 1
+              ? '0' + new Date().getMinutes()
+              : new Date().getMinutes()
+          }:${
+            String(new Date().getSeconds()).length === 1
+              ? '0' + new Date().getSeconds()
+              : new Date().getSeconds()
+          }`;
+          document.title = nowTime;
+          console.log(document.title);
+          document.querySelector('#header2').innerText = nowTime;
+          document.querySelector('#header1').innerText = `another second's gone - time to ${
+            parseInt(String(document.title).slice(-1)) % 2 === 0 ? '(č)' : '|č|'.toLocaleUpperCase()
+          }ode`;
+        }, 1000);
+
+        document.title = 'page';
+        const link = document.createElement('link');
+        link.rel = 'shortcut icon';
+        link.href = 'https://vadym4che.github.io/cv/favicon.png';
+        link.type = 'image/x-icon';
+        document.head.appendChild(link);
+        document.body.style.cursor = 'pointer';
+
+        let rounds = [];
+
+        function drawRound(e) {
+          if (rounds.length >= 15) {
+            const oldRound = rounds.shift();
+            document.body.removeChild(oldRound);
+          }
+          const round = document.createElement('div');
+          round.classList.add('round');
+          const x = e.pageX;
+          const y = e.pageY;
+          round.style.left = `calc(${x}px - 50vmax)`;
+          round.style.top = `calc(${y}px - 50vmax)`;
+          round.style.animation = 'scaleDown 8s';
+          document.body.appendChild(round);
+          rounds.push(round);
+          setTimeout(() => {
+            document.body.removeChild(round);
+            rounds.splice(rounds.indexOf(round), 1);
+          }, 8000);
+        }
+
+        document.addEventListener('mousemove', drawRound);
+      };
+    </script>
+  </body>
+</html>
